@@ -133,39 +133,3 @@ attr_reader :st_first, :st_last , :stations
 
 end
 
-st1 = Station.new "One"
-st2 = Station.new "Two"
-st3 = Station.new "Three"
-st4 = Station.new "Four"
-
-tr1 = Train.new "aaaa" , "pass", 16
-tr2 = Train.new "bbbb" , "cargo", 16
-tr3 = Train.new "cccc" , "pass", 16
-tr4 = Train.new "dddd" , "pass", 16
-
-route = Route.new st1, st4
-
-route.add_station(st2)
-route.add_station(st3)
-route.show_stations
-puts "______"
-#route.del_stations(st2)
-#route.show_stations.to_a
-tr1.add_route(route)
-tr2.add_route(route)
-tr3.add_route(route)
-tr4.add_route(route)
-
-#st1.show_trains
-#puts "______"
-tr1.forward(route)
-#st1.show_trains
-#st2.show_trains
-#puts "______"
-#tr1.forward(route)
-#st3.show_trains 
-#puts "______"
-#tr1.back(route)
-#st2.show_trains 
-puts st1.return_type("cargo")
-tr1.info_of_station (route) 
