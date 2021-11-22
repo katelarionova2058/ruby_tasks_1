@@ -133,14 +133,3 @@ attr_reader :st_first, :st_last , :stations
 
 end
 
-st1 = Station.new "One"
-st2 = Station.new "Two"
-st3 = Station.new "Three"
-st4 = Station.new "Four"
-
-tr1 = Train.new "aaaa" , "pass", 16
-tr2 = Train.new "bbbb" , "cargo", 16
-tr3 = Train.new "cccc" , "pass", 16
-tr4 = Train.new "dddd" , "pass", 16
-
-#
