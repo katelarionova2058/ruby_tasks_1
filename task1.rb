@@ -72,7 +72,7 @@ attr_reader :name, :type, :num , :num_station,  :num
 
 
   def add_route(routes)
-    @route = routes #объект класса маршрут
+    @route = routes 
     @current_station = @route.stations.first
     @current_station.add_trains(self)
   end
