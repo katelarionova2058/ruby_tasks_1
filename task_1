@@ -19,13 +19,9 @@ attr_reader :name, :trains_on_station
     @trains_on_station.each { |train| puts train.name }
   end
 
-  def number_pass
-    @trains_on_station.each { |train| puts train.type }
-  end
-
   def return_type(type)
-    @count_of_type = @trains_on_station.select { |train| train.type == type }
-    @count_of_type.count
+    count_of_type = @trains_on_station.select { |train| train.type == type }
+    count_of_type.count
   end
 
 end
@@ -34,8 +30,7 @@ end
 
 class Train
 
-attr_accessor :num
-attr_reader :name, :type, :num , :num_station,  :num
+attr_reader :name, :type, :num , :num_station
 
   def initialize(name, type , num_cars)
     @name = name
@@ -67,7 +62,7 @@ attr_reader :name, :type, :num , :num_station,  :num
   end
 
   def del_cars
-    @num_cars -= 1 if @current_speed.zero? && @num_cars.positive?
+    @num_cars -= 1 if @speed.zero? && @num_cars.positive?
   end
 
 
@@ -77,42 +72,40 @@ attr_reader :name, :type, :num , :num_station,  :num
     @current_station.add_trains(self)
   end
 
-  def forward(routes)
-    @route = routes
+def info_of_station_current 
+    @current_station
+  end
+
+  def info_of_station_back
     current_index = @route.stations.find_index(@current_station)
-    return unless current_index + 1 < @route.stations.count
+    @back_station = @route.stations[current_index -1] if (current_index - 1) >= 0
+    @back_station
+  end
+
+  def info_of_station_next
+    current_index = @route.stations.find_index(@current_station)
+    @next_station = @route.stations[current_index +1] if (current_index +1) <= @route.stations.count
+    @next_station
+  end
+
+ def next
+    self.info_of_station_next
     @current_station.del_trains(self)
-    @current_station = @route.stations[current_index + 1]
-    @current_station.add_trains(self)
+    @next_station.add_trains(self)
+    @current_station = @next_station
   end
 
-  def back (routes)
-   @route = routes
-    current_index = @route.stations.find_index(@current_station)
-    return unless current_index - 1 > 0
+  def back 
+    self.info_of_station_back
     @current_station.del_trains(self)
-    @current_station = @route.stations[current_index - 1]
-    @current_station.add_trains(self)
+    @back_station.add_trains(self)
+    @current_station = @back_station
   end
-
-  def info_of_station (route)
-    @route = route
-    current_index = @route.stations.find_index(@current_station)
-    @current_station.name
-    @back_station = @route.stations[current_index - 1] if (current_index - 1) >=0 
-    @back_station.name
-    @forward_station = @route.stations[current_index + 1] if (current_index + 1) <= @route.stations.count
-    @forward_station.name
-  end
-
 end 
-
-
-
 
 class Route
 attr_accessor :stations  
-attr_reader :st_first, :st_last , :stations 
+attr_reader :stations 
 
   def initialize (st_first, st_last)
     @stations  = [st_first, st_last]
@@ -122,14 +115,9 @@ attr_reader :st_first, :st_last , :stations
     @stations.insert(-2, station) unless @stations.include? station
   end
 
-  def show_stations
-    @stations.each { |station| puts station.name }
-  end
-
   def del_stations (station)
-  return unless (@station.first || @stations.last) != station
+  return unless (@stations.first || @stations.last) != station
   @stations.delete(station)
   end
 
 end
-
